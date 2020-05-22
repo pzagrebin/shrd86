@@ -14,6 +14,7 @@ ADJUST_SHIFT equ 4
 ;es:di - decompressed data pointer, value in di must be even!
 ;Call shrd86, after decompressing it will return decompressed data size in ax.
 ;Also it will rewrite compressed data block with zeroes and can change up to two next bytes.
+;It uses 2 KB on the stack.
 
 shrd86:
 cld
