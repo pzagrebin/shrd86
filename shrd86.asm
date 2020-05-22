@@ -1,21 +1,21 @@
+;This is depacker for data compressed with Shrinkler by Aske Simon Christensen.
+;You can freely use it as you like.
+;Uses only 8086 instructions, suitable for IBM PC/XT (~2 KB/s on 4.77 MHz 8088).
+;Assembled size is 177 bytes.
+
 cpu 8086
 
 NUM_CONTEXTS equ 1024
 INIT_ONE_PROB equ 0x8000
 ADJUST_SHIFT equ 4
 
-;This is depacker aimed for 8088/86.
-;It decompress data compressed with Shrinkler with --data option.
-;Optimized for size, 177 bytes.
-
 ;How to use:
-;ds:si - must point to byte 0x80 immediately followed by compressed data block
-;es:di - decompressed data goes here, value in di must be even!
-;Then call shrd86_decompress. It will return decompressed data size in ax.
-;It will clear compressed data block (fills it with zeroes)
-;and will destroy up to two bytes after it.
+;ds:si - must point to byte 0x80 immediately followed by compressed data block.
+;es:di - decompressed data pointer, value in di must be even!
+;Call shrd86, after decompressing it will return decompressed data size in ax.
+;Also it will rewrite compressed data block with zeroes and can change up to two next bytes.
 
-shrd86_decompress:
+shrd86:
 cld
 push di
 mov cx, NUM_CONTEXTS
